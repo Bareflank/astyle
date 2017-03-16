@@ -38,7 +38,7 @@ ipath=$(prefix)/bin
 CBASEFLAGS = -Wall -Wextra -fno-rtti -fno-exceptions
 JAVAINCS   = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux
 CXX = g++
-INSTALL=install -o $(USER) -g $(USER)
+INSTALL=install -o $(USER)
 
 ##################################################
 
