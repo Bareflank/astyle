@@ -35,10 +35,22 @@ SYSCONF_PATH=$(prefix)/share/doc/astyle
 bindir = bin
 objdir = obj
 ipath=$(prefix)/bin
-CBASEFLAGS = -Wall -Wextra -fno-rtti -fno-exceptions
+CBASEFLAGS = -Wall -Wextra -fno-rtti -fno-exceptions -std=c++11
 JAVAINCS   = -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux
 CXX = g++
-INSTALL=install -o $(USER)
+INSTALL=install -o $(USER) -g $(USER)
+
+# Library's major version number -- Increment in case of incompatible API
+# change.
+MAJORVER = 3
+# Library's minor version number -- Increment when functionnality is added in a
+# backward-compatible manner; reset to 0 when major number changes.
+MINORVER = 1
+# Library's patch version number -- Increment in case of backward-compatible
+# bug fixes or refactoring; reset to 0 when minor number changes.
+PATCHVER = 0
+# Library's full version number.
+SOLIBVER = $(MAJORVER).$(MINORVER).$(PATCHVER)
 
 ##################################################
 
@@ -50,12 +62,12 @@ else
     CFLAGSr   = -DNDEBUG -O3 $(CBASEFLAGS)
     CFLAGSd   = -g $(CBASEFLAGS)
 endif
-CFLAGSs   = -DASTYLE_LIB -fPIC -fvisibility=hidden $(CFLAGSr)
-CFLAGSsd  = -DASTYLE_LIB -fPIC -fvisibility=hidden $(CFLAGSd)
+CFLAGSs   = -DASTYLE_LIB -fPIC $(CFLAGSr)
+CFLAGSsd  = -DASTYLE_LIB -fPIC $(CFLAGSd)
 CFLAGSa   = -DASTYLE_LIB $(CFLAGSr)
 CFLAGSad  = -DASTYLE_LIB $(CFLAGSd)
-CFLAGSsj  = -DASTYLE_JNI -fPIC -fvisibility=hidden $(CFLAGSr) $(JAVAINCS)
-CFLAGSsjd = -DASTYLE_JNI -fPIC -fvisibility=hidden $(CFLAGSd) $(JAVAINCS)
+CFLAGSsj  = -DASTYLE_JNI -fPIC $(CFLAGSr) $(JAVAINCS)
+CFLAGSsjd = -DASTYLE_JNI -fPIC $(CFLAGSd) $(JAVAINCS)
 
 # define link options
 ifdef LDFLAGS
@@ -137,13 +149,13 @@ astyled:  $(OBJd)
 shared:  libastyle.so
 libastyle.so:  $(OBJs)
 	@ mkdir -p $(bindir)
-	$(CXX) -shared $(LDFLAGSr) -o $(bindir)/libastyle-2.06.so $^
+	$(CXX) -shared $(LDFLAGSr) -Wl,-soname,libastyle.so.$(MAJORVER) -o $(bindir)/libastyle.so.$(SOLIBVER) $^
 	@ echo
 
 shareddebug:  libastyled.so
 libastyled.so:  $(OBJsd)
 	@ mkdir -p $(bindir)
-	$(CXX) -shared $(LDFLAGSd) -o $(bindir)/libastyle-2.06d.so $^
+	$(CXX) -shared $(LDFLAGSd) -Wl,-soname,libastyled.so.$(MAJORVER) -o $(bindir)/libastyled.so.$(SOLIBVER) $^
 	@ echo
 
 static:  libastyle.a
@@ -161,13 +173,13 @@ libastyled.a:  $(OBJad)
 java:  libastylej.so
 libastylej.so:  $(OBJsj)
 	@ mkdir -p $(bindir)
-	$(CXX) -shared $(LDFLAGSr) -o $(bindir)/libastyle-2.06j.so $^
+	$(CXX) -shared $(LDFLAGSr) -Wl,-soname,libastylej.so.$(MAJORVER) -o $(bindir)/libastylej.so.$(SOLIBVER) $^
 	@ echo
 
 javadebug:  libastylejd.so
 libastylejd.so:  $(OBJsjd)
 	@ mkdir -p $(bindir)
-	$(CXX) -shared $(LDFLAGSd) -o $(bindir)/libastyle-2.06jd.so $^
+	$(CXX) -shared $(LDFLAGSr) -Wl,-soname,libastylejd.so.$(MAJORVER) -o $(bindir)/libastylejd.so.$(SOLIBVER) $^
 	@ echo
 
 all:  release debug shared shareddebug static staticdebug

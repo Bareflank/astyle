@@ -28,11 +28,38 @@
         span.option { color: saddlebrown; font-weight: bold; }
     </style>
 
+    <!--  When the user scrolls down from the top of the document, show the button -->
+
+    <script type="text/javascript">
+        // the <button> is described in the <body> section
+        window.onscroll = function () { scrollFunction() };
+
+        // When the user scrolls down 400px from the top of the document, show the button
+        function scrollFunction() {
+            if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
+                document.getElementById("topBtn").style.display = "block";
+            } else {
+                document.getElementById("topBtn").style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        // Changed to scroll to "Contents" instead of "Top".
+        function topFunction() {
+            //document.body.scrollTop = 0;
+            //document.documentElement.scrollTop = 0;
+            var scroll_element = document.getElementById("Contents");
+            scroll_element.scrollIntoView();
+        }
+    </script>
+
 </head>
 
 <body>
 
-    <h1>Artistic Style 2.06</h1>
+    <button onclick="topFunction()" id="topBtn" title="Go to Contents"><b>Top</b></button>
+
+    <h1>Artistic Style 3.1</h1>
 
     <h2>
         A Free, Fast, and Small Automatic Formatter<br />
@@ -50,22 +77,22 @@
     <p class="contents1">
         <a class="contents" href="#_Options">Options</a></p>
     <p class="contents1">
-        <a class="contents" href="#_Options_File">Options&nbsp;File</a></p>
+        <a class="contents" href="#_Option_Files">Option&nbsp;Files</a></p>
     <p class="contents1">
         <a class="contents" href="#_Disable_Formatting">Disable&nbsp;Formatting</a></p>
     <p class="contents1">
-        <a class="contents" href="#_Basic_Bracket_Styles">Basic&nbsp;Bracket&nbsp;Styles</a></p>
+        <a class="contents" href="#_Basic_Brace_Styles">Basic&nbsp;Brace&nbsp;Styles</a></p>
     <p class="contents1">
-        <a class="contents" href="#_Bracket_Style_Options">Bracket&nbsp;Style&nbsp;Options</a></p>
+        <a class="contents" href="#_Brace_Style_Options">Brace&nbsp;Style&nbsp;Options</a></p>
     <p class="contents2">
-        <a class="contents" href="#_default_bracket_style">default&nbsp;bracket&nbsp;style</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_default_brace_style">default&nbsp;brace&nbsp;style</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=allman">style=allman</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=java">style=java</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=kr">style=kr</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=stroustrup">style=stroustrup</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=whitesmith">style=whitesmith</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=vtk">style=vtk</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_style=banner">style=banner</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_style=ratliff">style=ratliff</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=gnu">style=gnu</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=linux">style=linux</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=horstmann">style=horstmann</a>&nbsp;&nbsp;&nbsp;
@@ -73,7 +100,8 @@
         <a class="contents" href="#_style=google">style=google</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=mozilla">style=mozilla</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_style=pico">style=pico</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_style=lisp">style=lisp</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_style=lisp">style=lisp</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Tab_Options">Tab&nbsp;Options</a></p>
     <p class="contents2">
@@ -81,14 +109,17 @@
         <a class="contents" href="#_indent=spaces">indent=spaces</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent=tab">indent=tab</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent=force-tab">indent=force&#8209;tab</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_indent=force-tab-x">--indent=force&#8209;tab&#8209;x</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_indent=force-tab-x">--indent=force&#8209;tab&#8209;x</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
-        <a class="contents" href="#_Bracket_Modify_Options">Bracket&nbsp;Modify&nbsp;Options</a></p>
+        <a class="contents" href="#_Brace_Modify_Options">Brace&nbsp;Modify&nbsp;Options</a></p>
     <p class="contents2">
         <a class="contents" href="#_attach_namespaces">attach&#8209;namespaces</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_attach_classes">attach&#8209;classes</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_attach_inlines">attach&#8209;inlines</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_attach-extern-c">attach&#8209;extern&#8209;c</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_attach-extern-c">attach&#8209;extern&#8209;c</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_attach-closing-while">attach&#8209;closing&#8209;while</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Indentation_Options">Indentation&nbsp;Options</a></p>
     <p class="contents2">
@@ -97,6 +128,7 @@
         <a class="contents" href="#_indent-switches">indent&#8209;switches</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-cases">indent&#8209;cases</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-namespaces">indent&#8209;namespaces</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_indent-after-parens">indent&#8209;after&#8209;parens</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-continuation">indent&#8209;continuation</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-labels">indent&#8209;labels</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-preproc-block">indent&#8209;preproc&#8209;block</a>&nbsp;&nbsp;&nbsp;
@@ -104,7 +136,7 @@
         <a class="contents" href="#_indent-preproc-cond">indent&#8209;preproc&#8209;cond</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_indent-col1-comments">indent&#8209;col1&#8209;comments</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_min-conditional-indent">min&#8209;conditional&#8209;indent</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_max-instatement-indent">max&#8209;instatement&#8209;indent</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_max-continuation-indent">max&#8209;continuation&#8209;indent</a>&nbsp;&nbsp;&nbsp;
     </p>
     <p class="contents1">
         <a class="contents" href="#_Padding_Options">Padding&nbsp;Options</a></p>
@@ -122,16 +154,19 @@
         <a class="contents" href="#_delete-empty-lines">delete&#8209;empty&#8209;lines</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_fill-empty-lines">fill&#8209;empty&#8209;lines</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_align-pointer">align&#8209;pointer</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_align-reference">align&#8209;reference</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_align-reference">align&#8209;reference</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Formatting_Options">Formatting&nbsp;Options</a></p>
     <p class="contents2">
-        <a class="contents" href="#_break-closing-brackets">break&#8209;closing&#8209;brackets</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_break-closing-braces">break&#8209;closing&#8209;braces</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_break-elseifs">break&#8209;elseifs</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_break-one-line-headers">break&#8209;one&#8209;line&#8209;headers</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_add-brackets">add&#8209;brackets</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_add-one-line-brackets">add&#8209;one&#8209;line&#8209;brackets</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_remove-brackets">remove&#8209;brackets</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_add-braces">add&#8209;braces</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_add-one-line-braces">add&#8209;one&#8209;line&#8209;braces</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_remove-braces">remove&#8209;braces</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_break-return-type">break&#8209;return&#8209;type</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_attach-return-type">attach&#8209;return&#8209;type</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_keep-one-line-blocks">keep&#8209;one&#8209;line&#8209;blocks</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_keep-one-line-statements">keep&#8209;one&#8209;line&#8209;statements</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_convert-tabs">convert&#8209;tabs</a>&nbsp;&nbsp;&nbsp;
@@ -139,7 +174,8 @@
         <a class="contents" href="#_remove-comment-prefix">remove&#8209;comment&#8209;prefix</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_max-code-length">max&#8209;code&#8209;length</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_max-code-length">break&#8209;after&#8209;logical</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_mode">mode</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_mode">mode</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Objective_C_Options">Objective&#8209;C&nbsp;Options</a></p>
     <p class="contents2">
@@ -150,7 +186,8 @@
         <a class="contents" href="#_pad-param-type">pad&#8209;param&#8209;type</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_unpad-param-type">unpad&#8209;param&#8209;type</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_align-method-colon">align&#8209;method&#8209;colon</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_pad-method-colon">pad&#8209;method&#8209;colon</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_pad-method-colon">pad&#8209;method&#8209;colon</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Other_Options">Other&nbsp;Options</a>&nbsp;&nbsp;&nbsp;</p>
     <p class="contents2">
@@ -165,17 +202,21 @@
         <a class="contents" href="#_verbose">verbose</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_formatted">formatted</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_quiet">quiet</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_lineend">lineend</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_lineend">lineend</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p class="contents1">
         <a class="contents" href="#_Command_Line_Only">Command&nbsp;Line&nbsp;Only</a></p>
     <p class="contents2">
-        <a class="contents" href="#_options=">options</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_options=none">options=none</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_options">options</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_project">project</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_ascii">ascii</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_version">version</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_help">help</a>&nbsp;&nbsp;&nbsp;
         <a class="contents" href="#_html">html</a>&nbsp;&nbsp;&nbsp;
-        <a class="contents" href="#_html=">html=</a>&nbsp;&nbsp;&nbsp;</p>
+        <a class="contents" href="#_html=">html=</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_stdin=">stdin=</a>&nbsp;&nbsp;&nbsp;
+        <a class="contents" href="#_stdout=">stdout=</a>&nbsp;&nbsp;&nbsp;
+    </p>
     <p>
         &nbsp;</p>
     <hr />
@@ -202,9 +243,8 @@
     <p>
         Artistic Style can process directories recursively. Wildcards (such as "*.cpp" or "*.c??") are processed internally.
         If a shell is used, it should pass the wildcards to Artistic Style instead of resolving them first. For Linux
-        use
-        double quotes around paths whose file name contains wildcards. For Windows use double quotes around paths whose
-        file name contains spaces. The <a href="#_recursive">recursive</a> option in the
+        use double quotes around paths whose file name contains wildcards. For Windows use double quotes around paths
+        whose file name contains spaces. The <a href="#_recursive">recursive</a> option in the
         <a href="#_Other_Options">Other Options</a> section contains information on recursive processing.</p>
 
     <h4>File Names</h4>
@@ -214,7 +254,7 @@
         is created with an <strong>.orig</strong> appended to the original file name. (This can be set to
         a different string by the option --suffix=, or suppressed altogether by the options -n
         or --suffix=none). Thus, after indenting <em>SourceFile.cpp</em> the indented file will
-        be named <em>SourceFile.cpp</em>, while the original pre-indented file will be renamed to 
+        be named <em>SourceFile.cpp</em>, while the original pre-indented file will be renamed to
         <em>SourceFile.cpp.orig</em>.</p>
 
     <h4>Internationalization</h4>
@@ -242,17 +282,17 @@
         The names of special characters used in programming vary by region. The terminology used by Artistic Style,
         followed by other common names, is<strong>:</strong></p>
     <blockquote>
-        brackets { } &#8209; also called  braces, curly brackets, or curly braces.<br />
-        parens ( ) &#8209; also called parentheses, brackets, round brackets, circle brackets, or soft brackets.<br />
-        block parens [ ] &#8209; also called brackets, square brackets, closed brackets, or hard brackets.<br />
+        braces or curly braces { } &#8209; also called brackets, or curly brackets.<br />
+        parens or round brackets ( ) &#8209; also called parentheses, brackets, circle brackets, or soft brackets.<br />
+        square brackets [ ] &#8209; also called block parens, brackets, closed brackets, or hard brackets.<br />
         angle brackets < > &#8209; also called brackets, pointy brackets, triangular brackets, diamond brackets, tuples,
         or chevrons.
     </blockquote>
     <p>
-        Visual Studio, and possibly other development environments, has an Edit option "Align Assignments" that will align
-        assignment operators across multiple lines. There is also an extension named "Code alignment" that will align
-        the code on other items as well. Formatting with these options and extensions can be used with Artistic Style.
-        The space padding will be maintained and the alignment will be preserved. </p>
+        Visual Studio, and possibly other development environments, has extensions that will align assignment operators
+        across multiple lines. There is an extension named "Code alignment" that will align the code on other items as
+        well. Formatting with these options and extensions can be used with Artistic Style. The space padding will be
+        maintained and the alignment will be preserved. </p>
     <p>
         Artistic Style can format standard class library statements such as Open GL, wxWidgets, Qt, and MFC.</p>
     <p>
@@ -266,15 +306,13 @@
         Unicode files encoded as UTF&#8209;16, both big and little endian, will be formatted. The files must begin with
         a byte order mark (BOM) to be recognized. Files encoded as UTF&#8209;32 will be rejected. Some compilers do not
         support these encodings. These files can be converted to UTF&#8209;8 encoding with the program "iconv". There
-        are Linux and Windows versions available (the Windows version does not seem to work for all encodings). A sample
-        command line is "iconv &#8209;f &nbsp;UTF&#8209;16 &#8209;t UTF&#8209;8 &lt; filein.cpp &gt; fileout.cpp. Visual
-        Studio can convert the files from the "File &gt; Advanced Save Options" menu. Then select encoding "Unicode (UTF&#8209;8
-        with signature) - Codepage 65001". There are other development environments and text editors, such as SciTE, that
-        can convert files to UTF&#8209;8.</p>
+        are Linux and Windows versions available (the Windows version does not seem to work for all encodings). Visual
+        Studio can convert the files from the "File &gt; Advanced Save Options" menu. There are other development environments
+        and text editors, such as SciTE, that can convert files to UTF&#8209;8.</p>
     <p>
         Embedded statements that are multiple-line and are NOT in a C-type format, such as Python, are usually mal-formatted
-        (a C-type format has blocks enclosed by brackets and statements terminated by a semi-colon). Macros that define
-        functions may cause the following code to be mal-formatted because the macro is missing the brackets and semi-colons
+        (a C-type format has blocks enclosed by braces and statements terminated by a semi-colon). Macros that define
+        functions may cause the following code to be mal-formatted because the macro is missing the braces and semi-colons
         from the definition. If you have source code with these types of statements, exclude them with the
         <a href="#_exclude">exclude=####</a> option described in the <a href="#_Other_Options">Other Options</a>
         section.</p>
@@ -287,23 +325,22 @@
     <h3 id="_Quick_Start">Quick Start</h3>
 
     <p>
-        If you have never used Artistic Style there are a 
-        several of ways to start.</p>
+        If you have never used Artistic Style, there are several of ways to get started.</p>
     <p>
-        One is to run it with no options at all. This will use the <a href="#_default_bracket_style">default bracket
-            style</a>, 4 spaces per indent, and no formatting changes.  This will break the brackets for one
+        One is to run it with no options at all. This will use the <a href="#_default_brace_style">default brace
+            style</a>, 4 spaces per indent, and no formatting changes.  This will break the braces for one
         line blocks and will break one line statements. To change this, use the option <a href="#_keep-one-line-blocks">keep-one-line-blocks</a>
         and/or <a href="#_keep-one-line-statements">keep-one-line-statements</a> described in the
         <a href="#_Formatting_Options">Formatting Options</a> section.</p>
     <p>
-        Another way is to use one of the bracket styles described in the <a href="#_Bracket_Style_Options">Bracket Style
-            Options</a> section. Select one with a bracket formatting style you like. If no indentation option is set,
+        Another way is to use one of the brace styles described in the <a href="#_Brace_Style_Options">Brace Style
+            Options</a> section. Select one with a brace formatting style you like. If no indentation option is set,
         the default option of 4 spaces will be used. These options also break one line blocks and one line statements
         as described above.</p>
     <p>
         A third option is to use an options file from the &quot;file&quot; folder. If there is a coding style you want
-        to duplicate, input the appropriate <a href="#_Options_File">options file</a>. Use the option 
-        <a href="#_options=">options=####</a> to specify the file to use. It must contain a path for the file, including
+        to duplicate, input the appropriate <a href="#_Option_Files">option file</a>. Use the option
+        <a href="#_options">options=####</a> to specify the file to use. It must contain a path for the file, including
         the file name. </p>
     <p>
         Once you are familiar with the options you can customize the format to your personal preference.</p>
@@ -315,35 +352,57 @@
 
     <h3 id="_Usage">Usage</h3>
 
+    <h4>Command Line</h4>
+
     <p>
         Artistic style is a console program that receives information from the command line.</p>
     <div class="code">
         <p class="code">
             Command line format:</p>
-        <pre>astyle&nbsp; [OPTIONS]&nbsp; <em>SourceFile1&nbsp; SourceFile2&nbsp; SourceFile3&nbsp; [ . . . ]</em></pre>
+        <pre>astyle&nbsp; [OPTIONS]&nbsp; <em>SourceFilePath1&nbsp; SourceFilePath2&nbsp; SourceFilePath3&nbsp; [ . . . ]</em></pre>
     </div>
     <p>
-        The block parens [ ] indicate that more than one option or more than one file name can be entered. They are NOT
-        actually included in the command. For the options format refer to the following Options section.</p>
+        The square brackets [ ] indicate that more than one option or more than one file name can be entered. They are
+        NOT actually included in the command. For the options format refer to the following Options section.</p>
     <div class="code">
         <p class="code">
             Example to format a single file:</p>
-        <pre>astyle  --style=allman  /home/user/project/foo.cpp
+        <pre>astyle&nbsp; --style=allman&nbsp; /home/project/foo.cpp
 </pre>
         <p class="code">
-            Example to format all .cpp and .h files recursively:</p>
-        <pre>astyle  --style=allman --recursive  /home/user/project/*.cpp  /home/user/project/*.h
+            Example to format C# files recursively:</p>
+        <pre>astyle&nbsp; --style=allman&nbsp; --recursive&nbsp; /home/project/*.cs
 </pre>
     </div>
+
+    <h4>File Extensions</h4>
+
+    <p>
+        Multiple file extensions may be used if separated by commas or semicolons. An optional space may follow if the
+        entire file path is enclosed in double quotes. There is no limit to the number of extensions used.
+    </p>
+    <div class="code">
+        <p class="code">
+            Example to format C++ files recursively using multiple file extensions:</p>
+        <pre>astyle&nbsp; --style=allman&nbsp; --recursive&nbsp; /home/project/*.cpp,*.h
+</pre>
+    </div>
+
+    <h4>Redirection</h4>
+
     <p>
         The < and > characters may be used to redirect the files into standard input (stdin) and out of standard output
-        (stdout) - don't forget them! With this option only one file at a time can be formatted. Wildcards are not 
-        recognized, there are no console messages, and a backup is not created. On Windows the output will always have
-        Windows line ends.</p>
+        (stdout) - don't forget them! With this option, only one file at a time can be formatted. Wildcards are not
+        recognized, there are no console messages, and a backup is not created. On Windows, the output will always have
+        Windows line ends. The options "stdin=" and "stdout=" can be used instead of redirection.</p>
     <div class="code">
         <p class="code">
             Example of redirection option to format a single file and change the name:</p>
         <pre>astyle --style=allman &lt; <em>OriginalSourceFile</em> &gt; <em>BeautifiedSourceFile</em>
+</pre>
+        <p class="code">
+            Example of redirection using "stdin=" and "stdout=" to format a single file and change the name:</p>
+        <pre>astyle --style=allman --stdin=<em>OriginalSourceFile</em> --stdout=<em>BeautifiedSourceFile</em>
 </pre>
     </div>
     <div class="code">
@@ -361,10 +420,10 @@
     <h3 id="_Options">Options</h3>
 
     <p>
-        Not specifying any options will result in the <a href="#_default_bracket_style">default bracket style</a>,
+        Not specifying any options will result in the <a href="#_default_brace_style">default brace style</a>,
         4 spaces per indent, and no formatting changes.</p>
     <p>
-        Options may be written in two different ways.</p>
+        This program follows the usual GNU command line syntax. Options may be written two different ways.</p>
 
     <h4>Long options</h4>
 
@@ -383,33 +442,59 @@
 
     <!--  * * * * * * * * * * * * * *  Options File  * * * * * * * * * * * * * *  -->
 
-    <h3 id="_Options_File">Options File</h3>
+    <h3 id="_Option_Files">Option Files</h3>
 
     <p>
-        An OPTIONAL, default options file may be used to supplement or replace the command line options.&nbsp;</p>
-    <ul>
-        <li>The command line options have precedence. If there is a conflict between a command line option and an option in
-            the default options file, the command line option will be used.
-        </li>
-        <li>Artistic Style looks for this file in the following locations (in order):
-            <ol>
-                <li>the file indicated by the --options= command line option;</li>
-                <li>the file and directory indicated by the environment variable ARTISTIC_STYLE_OPTIONS (if it exists);</li>
-                <li>the file named .astylerc in the directory pointed to by the HOME environment variable (e.g. "$HOME/.astylerc"
-                    on Linux);
-                </li>
-                <li>the file named astylerc in the directory pointed to by the USERPROFILE environment variable (e.g. "%USERPROFILE%\astylerc"
-                    on Windows).
-                </li>
-            </ol>
-        </li>
-        <li>This option file lookup can be disabled by specifying --options=none on the command line.</li>
-        <li>Options may be set apart by new-lines, tabs, commas, or spaces.</li>
-        <li>Long options in the options file may be written without the preceding '--'.</li>
-        <li>Lines within the options file that begin with '#' are considered line-comments.</li>
-    </ul>
+        An OPTIONAL default option file and/or project option file may be used to supplement or replace the command
+        line options. They may use the computer's standard encoding, UTF-8 or UTF-16 unicode encoding.</p>
     <p>
-        Example of a default options file:</p>
+        Options may be set apart by new-lines, tabs, commas, or spaces. Long options in the option file may be written
+        without the preceding '--'. Lines within the option file that begin with '#' are considered line-comments.
+        The option files used in formatting and their location can be displayed by using the --verbose 
+        option. </p>
+    <ol>
+        <li>The <strong>command line options</strong> have precedence. If there is a conflict between a command line option
+            and an option in a default or project file, the command line option will be used.
+        </li>
+        <li>The <strong>project option file</strong> has precedence over the default option file but not the command line
+            options. The project option file should be in the top directory of the project being formatted. The file is identified
+            by a file name only. One of the command line <a href="#_project">project</a> options must be used to indicate
+            a file is available, or it must be referred to by the environment variable. Artistic Style looks for the file
+            in the current directory or one of its parent directories in the following order.
+            <ul>
+                <li>the file name indicated by the --project= command line option.</li>
+                <li>the file named .astylerc or _ astylerc. </li>
+                <li>the file name identified by the environment variable ARTISTIC_STYLE_PROJECT_OPTIONS if it exists.</li>
+                <li>the file or environment variable can be disabled by specifying --project=none on the command line.</li>
+            </ul>
+            The file is expected to be in the top directory of the project being formatted. Only one file will be used per
+            execution and all files to be formatted are assumed to be in the same project. Artistic Style will search 
+            backward in the directory path to find the project option file. The initial directory path for the search is obtained
+            from one of the following locations in the following order.
+            <ul>
+                <li>The first <em>SourceFilePath</em> entered on the command line.</li>
+                <li>The value of "--stdin=" if it is used for redirection.</li>
+                <li>The current directory if "<" is used for rediredction. If the file to be formatted is not in the current 
+                    directory, use the "--stdin=" option instead.</li>
+            </ul>
+        </li>
+        <li>The <strong>default option file</strong> can be used for all projects. The file is identified by a file path and
+            a file name. One of the command line <a href="#_options">options</a> must be used to indicate a file is available,
+            or it must be referred to by the environment variable. Artistic Style looks for a file path and file name in the
+            following order.
+            <ul>
+                <li>the file path indicated by the --options= command line option.</li>
+                <li>the file path indicated by the environment variable ARTISTIC_STYLE_OPTIONS if it exists.</li>
+                <li>the file named .astylerc in the directory pointed to by the HOME environment variable 
+                    (e.g. "$HOME<strong>/.</strong>astylerc" on Linux); </li>
+                <li>the file named astylerc in the directory pointed to by the APPDATA environment variable 
+                    (e.g. "%APPDATA%<strong>\</strong>astylerc" on Windows). </li>
+                <li>the file or environment variable can be disabled by specifying --options=none on the command line.</li>
+            </ul>
+        </li>
+    </ol>
+    <p>
+        Example of a default or project option file:</p>
     <div class="code">
         <pre><span class="comment"># this line is a comment</span>
 --style=allman      <span class="comment"># this is a line-end comment</span>
@@ -442,8 +527,8 @@ indent-switches     <span class="comment"># cannot do this on the command line</
     <p>
         The beginning tag is &quot;*INDENT-OFF*&quot; and the ending tag is &quot;*INDENT-ON*&quot;.
         They may be used anywhere in the program with the condition that parsing is partially disabled between the
-        tags. Disabling partial statements may result in incorrect formatting after the ending tag. If this happens expand
-        the tags to include additional code.</p>
+        tags. Disabling partial statements may result in incorrect formatting after the ending tag. If this happens,
+        expand the tags to include additional code.</p>
     <div class="code">
         <p class="code">
             The following retains the format of a preprocessor define:</p>
@@ -465,9 +550,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         padded incorrectly, then disabling the formatting may be necessary. To avoid having to use the &quot;disable block&quot;
         tags above, a single line disable is available.</p>
     <p>
-        A line-end comment tag &quot;*NOPAD* will disable the &quot;pad-oper&quot;, &quot;align-pointer&quot;, and &quot;align-reference&quot;
-        options. Parsing does NOT stop and all other formatting will be applied to the line. The tag applies to the
-        one line only.</p>
+        A line-end comment tag &quot;*NOPAD*&quot; will disable the &quot;pad-oper&quot;, &quot;align-pointer&quot;, and
+        &quot;align-reference&quot; options. Parsing does NOT stop and all other formatting will be applied to the line.
+        The tag applies to the one line only.</p>
     <div class="code">
         <p class="code">
             The following prevents the operator padding from changing:</p>
@@ -477,29 +562,29 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <hr />
 
-    <!--  * * * * * * * * * * * *   Basic Bracket Styles    * * * * * * * * * * * *  -->
+    <!--  * * * * * * * * * * * *   Basic Brace Styles    * * * * * * * * * * * *  -->
 
-    <h3 id="_Basic_Bracket_Styles">Basic Bracket Styles</h3>
+    <h3 id="_Basic_Brace_Styles">Basic Brace Styles</h3>
 
     <p>
-        There are three basic bracket styles.<br />
-        Attached &#8211; The brackets are attached to the end of 
+        There are three basic brace styles.<br />
+        Attached &#8211; The braces are attached to the end of
         the last line of the previous block. (Java).<br />
-        Broken &#8211; The brackets are broken from the previous 
+        Broken &#8211; The braces are broken from the previous
         block. (Allman).<br />
-        Linux &#8211; The brackets are attached except for the opening bracket of a function, class, or namespace (K&amp;R,
+        Linux &#8211; The braces are attached except for the opening brace of a function, class, or namespace (K&amp;R,
         Linux).</p>
 
     <p>
-        Other bracket styles are variations of these. Some will use variations on the placement of class, namespace, 
-        or other brackets. (Stroustrup, Google, One True Brace, Lisp). Others will indent the brackets (Whitesmith, VTK,
-        Banner, GNU). Still others will use run-in brackets where the following statement is on the same line as the bracket
-        (Horstmann, Pico).</p>
+        Other brace styles are variations of these. Some will use variations on the placement of class, namespace,
+        or other braces. (Stroustrup, Google, One True Brace, Lisp). Others will indent the braces (Whitesmith, VTK,
+        Banner, and GNU). Others will use run-in braces where the following statement is on the same line as the
+        brace (Horstmann and Pico).</p>
     <p>
-        There are technical arguments for selecting one style over another. But the usual reason comes down to 
-        personal preference. Some like broken brackets with vertical whitespace that makes the code easy to read. 
-        Others like attached brackets with code that is more compact. Sometimes programmers just want a change. It is
-        easier to select a preference if you can see an entire file formatted in a certain bracket style. With Artistic
+        There are technical arguments for selecting one style over another. But the usual reason comes down to
+        personal preference. Some like broken braces with vertical whitespace that makes the code easy to read.
+        Others like attached braces with code that is more compact. Sometimes programmers just want a change. It is
+        easier to select a preference if you can see an entire file formatted in a certain brace style. With Artistic
         Style you can easily modify source code to suit your
         preference.</p>
 
@@ -508,28 +593,28 @@ indent-switches     <span class="comment"># cannot do this on the command line</
     <hr />
 
 
-    <!--  * * * * * * * * * * * *   Bracket Style Options    * * * * * * * * * * * *  -->
+    <!--  * * * * * * * * * * * *   Brace Style Options    * * * * * * * * * * * *  -->
 
-    <h3 id="_Bracket_Style_Options">Bracket Style Options</h3>
+    <h3 id="_Brace_Style_Options">Brace Style Options</h3>
 
     <p>
-        Bracket Style options define the bracket style to use. All options default to 4 spaces per indent, indented with
+        Brace Style options define the brace style to use. All options default to 4 spaces per indent, indented with
         spaces. By default, none of the styles indent namespaces. Other indentations are indicated in the individual style
-        description. All options will break the brackets for one line blocks and will break one line statements. To change
+        description. All options will break the braces for one line blocks and will break one line statements. To change
         this, use the option <a href="#_keep-one-line-blocks">keep-one-line-blocks</a> and/or <a href="#_keep-one-line-statements">
             keep-one-line-statements</a> described in the <a href="#_Formatting_Options">Formatting Options</a>
         section.</p>
     <p>
         &nbsp;</p>
-    <p id="_default_bracket_style">
-        <code class="title">default bracket style</code><br />
-        If no bracket style is requested, the default bracket style will be used. The opening brackets are not changed
-        and the closing brackets will be broken from the preceding line. There are a few exceptions to this.</p>
+    <p id="_default_brace_style">
+        <code class="title">default brace style</code><br />
+        If no brace style is requested, the default brace style will be used. The opening braces are not changed
+        and the closing braces will be broken from the preceding line. There are a few exceptions to this.</p>
     <p>
         &nbsp;</p>
     <p id="_style=allman">
         <code class="title">--style=allman / --style=bsd / --style=break / -A1</code><br />
-        Allman style uses broken brackets.</p>
+        Allman style uses broken braces.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -547,7 +632,7 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=java">
         <code class="title">--style=java / --style=attach / -A2</code><br />
-        Java style uses attached brackets.</p>
+        Java style uses attached braces.</p>
     <div class="code">
         <pre>int Foo(bool isBar) <span class="brace">{</span>
     if (isBar) <span class="brace">{</span>
@@ -562,8 +647,8 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=kr">
         <code class="title">--style=kr / --style=k&amp;r / --style=k/r / -A3</code><br />
-        Kernighan &amp; Ritchie style uses linux brackets. Opening brackets are broken from namespaces, classes, and function
-        definitions. The brackets are attached to everything else, including arrays, structs, enums, and statements within
+        Kernighan &amp; Ritchie style uses linux braces. Opening braces are broken from namespaces, classes, and function
+        definitions. The braces are attached to everything else, including arrays, structs, enums, and statements within
         a function.</p>
     <p>
         Using the k&amp;r option may cause problems because of the &amp;. This can be resolved by enclosing the k&amp;r
@@ -584,10 +669,11 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=stroustrup">
         <code class="title">--style=stroustrup / -A4</code><br />
-        Stroustrup style uses linux brackets. Opening brackets are broken from function definitions only.
-        The brackets are attached to everything else, including namespaces, classes, arrays, structs, enums, 
-        and statements within a function. This style frequently is used with headers broken from closing brackets 
-        (break-closing-brackets) and an indent of 5 spaces.</p>
+        Stroustrup style uses linux braces with closing headers broken from closing braces
+        (e.g. &#8209;&#8209;break&#8209;closing&#8209;headers). Opening braces are broken from function definitions only.
+        The opening braces are attached to everything else, including namespaces, classes, arrays, structs, enums, and
+        statements within a function. This style frequently is used with &quot;attach&#8209;closing&#8209;while&quot;,
+        tabbed indents, and an indent of 5 spaces.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -604,7 +690,7 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=whitesmith">
         <code class="title">--style=whitesmith / -A5</code><br />
-        Whitesmith style uses broken, indented brackets. Switch blocks and class blocks are indented to prevent a 'hanging
+        Whitesmith style uses broken, indented braces. Switch blocks and class blocks are indented to prevent a 'hanging
         indent' with the following case statements and C++ class modifiers (public, private, protected).&nbsp;</p>
     <div class="code">
         <pre>int Foo(bool isBar)
@@ -623,8 +709,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=vtk">
         <code class="title">--style=vtk / -A15</code><br />
-        VTK (Visualization Toolkit) style uses broken, indented brackets, except for the opening bracket. Switch blocks
-        are indented to prevent a 'hanging indent' with following case statements.&nbsp;</p>
+        VTK (Visualization Toolkit) style uses broken, indented braces, except for the opening brace of classes, 
+        arrays, structs, enums, and function definitions.. Switch blocks are indented to prevent a 'hanging
+        indent' with following case statements. </p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -640,9 +727,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
     </div>
     <p>
         &nbsp;</p>
-    <p id="_style=banner">
-        <code class="title">--style=banner / -A6</code><br />
-        Banner style uses attached, indented brackets. Switch blocks and class blocks are indented to prevent a 'hanging
+    <p id="_style=ratliff">
+        <code class="title">--style=ratliff / --style=banner / -A6</code><br />
+        Ratliff style uses attached, indented braces. Switch blocks and class blocks are indented to prevent a 'hanging
         indent' with following case statements and C++ class modifiers (public, private, protected).&nbsp;</p>
     <div class="code">
         <pre>int Foo(bool isBar) <span class="brace">{</span>
@@ -659,9 +746,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=gnu">
         <code class="title">--style=gnu / -A7</code><br />
-        GNU style uses broken brackets and indented blocks. Extra indentation is added to blocks <strong>within a 
-            function</strong> only. Other brackets and blocks are broken, but NOT indented. This style frequently is 
-        used with an indent of 2 spaces.</p>
+        GNU style uses broken braces. Extra indentation is added to blocks <strong>within a function</strong>
+        only. The entire block is indented, not just the brace. This style frequently is used with an indent of 2 
+        spaces. </p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -679,13 +766,13 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=linux">
         <code class="title">--style=linux / --style=knf / -A8</code><br />
-        Linux style uses linux brackets. Opening brackets are broken from namespace, class, and function definitions.
-        The brackets are attached to everything else, including arrays, structs, enums, and statements within a function.
+        Linux style uses linux braces. Opening braces are broken from namespace, class, and function definitions.
+        The braces are attached to everything else, including arrays, structs, enums, and statements within a function.
         The <strong>minimum conditional indent</strong> is one-half indent. If you want a different minimum conditional
-        indent, use the K&amp;R style instead. This style works best with a large indent. It frequently is used with 
+        indent, use the K&amp;R style instead. This style works best with a large indent. It frequently is used with
         an indent of 8 spaces.</p>
     <p>
-        Also known as Kernel Normal Form (KNF) style, this is the style used in the Linux 
+        Also known as Kernel Normal Form (KNF) style, this is the style used in the Linux
         BSD kernel.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
@@ -701,8 +788,8 @@ indent-switches     <span class="comment"># cannot do this on the command line</
     <p>
         &nbsp;</p>
     <p id="_style=horstmann">
-        <code class="title">--style=horstmann / -A9</code><br />
-        Horstmann style uses broken brackets and run-in statements. Switches are indented to allow a run-in to the opening
+        <code class="title">--style=horstmann / --style=run-in / -A9</code><br />
+        Horstmann style uses broken braces and run-in statements. Switches are indented to allow a run-in to the opening
         switch block. This style frequently is used with an indent of 3 spaces.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
@@ -719,12 +806,12 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=1tbs">
         <code class="title">--style=1tbs / --style=otbs / -A10</code><br />
-        "One True Brace Style" uses linux brackets and adds brackets to unbracketed one line conditional statements. Opening
-        brackets are broken from namespaces, classes, and function definitions. The brackets are attached to everything
+        "One True Brace Style" uses linux braces and adds braces to unbraced one line conditional statements. Opening
+        braces are broken from namespaces, classes, and function definitions. The braces are attached to everything
         else, including arrays, structs, enums, and statements within a function. </p>
     <p>
-        In the following example, brackets have been added to the "return 0;" statement. The option
-        &#8209;&#8209;add&#8209;one&#8209;line&#8209;brackets can also be used with this style.</p>
+        In the following example, braces have been added to the "return 0;" statement. The option
+        &#8209;&#8209;add&#8209;one&#8209;line&#8209;braces can also be used with this style.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -741,9 +828,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=google">
         <code class="title">--style=google / -A14</code><br />
-        Google style uses attached brackets and indented class access modifiers.&nbsp;See the indent-modifiers
-        option for an example of the indented modifiers format. This is not actually a unique bracket style, but 
-        is Java style with a non-bracket variation. This style frequently is used with an indent of 2 spaces.</p>
+        Google style uses attached braces and indented class access modifiers.&nbsp;See the indent-modifiers
+        option for an example of the indented modifiers format. This is not actually a unique brace style, but
+        is Java style with a non-brace variation. This style frequently is used with an indent of 2 spaces.</p>
     <div class="code">
         <pre>int Foo(bool isBar) <span class="brace">{</span>
     if (isBar) <span class="brace">{</span>
@@ -758,9 +845,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=mozilla">
         <code class="title">--style=mozilla / -A16</code><br />
-        Mozilla style uses linux brackets. Opening brackets are broken from classes, structs, enums, and function 
-        definitions. The brackets are attached to everything else, including namespaces, arrays, and statements 
-        within a function. This style frequently is used with an indent of 2 spaces.</p>
+        Mozilla style uses linux braces. Opening braces are broken from classes, structs, enums, and function
+        definitions. The braces are attached to everything else, including namespaces, arrays, and statements
+        within a function. This style frequently is used with an indent of 2 spaces and --break-return-type.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>
@@ -776,10 +863,10 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=pico">
         <code class="title">--style=pico / -A11</code><br />
-        Pico style uses broken brackets and run-in statements with attached closing brackets. The closing bracket is attached
+        Pico style uses broken braces and run-in statements with attached closing braces. The closing brace is attached
         to the last line in the block. Switches are indented to allow a run-in to the opening switch block. The style
-        implies keep-one-line-blocks and keep-one-line-statements. If add-brackets is used they will be added as one-line
-        brackets. This style frequently is used with an indent of 2 spaces.</p>
+        implies keep-one-line-blocks and keep-one-line-statements. If add-braces is used they will be added as one-line
+        braces. This style frequently is used with an indent of 2 spaces.</p>
     <div class="code">
         <pre>int Foo(bool isBar)
 <span class="brace">{</span>   if (isBar)
@@ -793,9 +880,9 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_style=lisp">
         <code class="title">--style=lisp / --style=python / -A12</code><br />
-        Lisp style uses attached opening and closing brackets. The closing bracket is attached to the last line in the
+        Lisp style uses attached opening and closing braces. The closing brace is attached to the last line in the
         block. The style implies keep-one-line-statements, but NOT keep-one-line-blocks. This style does not support one-line
-        brackets. If add-one-line-brackets is used they will be added as multiple-line brackets.</p>
+        braces. If add-one-line-braces is used they will be added as multiple-line braces.</p>
     <div class="code">
         <pre>int Foo(bool isBar) <span class="brace">{</span>
     if (isBar) <span class="brace">{
@@ -920,17 +1007,17 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <hr />
 
-    <!--  * * * * * * * * * * * *   Bracket Modify Options   * * * * * * * * * * * * -->
+    <!--  * * * * * * * * * * * *   Brace Modify Options   * * * * * * * * * * * * -->
 
-    <h3 id="_Bracket_Modify_Options">Bracket Modify Options</h3>
+    <h3 id="_Brace_Modify_Options">Brace Modify Options</h3>
 
     <p id="_attach_namespaces">
         <code class="title">--attach-namespaces / -xn</code><br />
-        Attach brackets to a namespace statement. This is done regardless of the bracket style being used. 
-        It will also attach brackets to CORBA IDL module statements.</p>
+        Attach braces to a namespace statement. This is done regardless of the brace style being used.
+        It will also attach braces to CORBA IDL module statements.</p>
     <div class="code">
         <p class="code">
-            the bracket is always attached to a namespace statement:</p>
+            the brace is always attached to a namespace statement:</p>
         <pre>namespace FooName <span class="brace">{</span>
 ...
 <span class="brace">}</span>
@@ -940,10 +1027,10 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_attach_classes">
         <code class="title">--attach-classes / -xc</code><br />
-        Attach brackets to a class statement. This is done regardless of the bracket style being used.</p>
+        Attach braces to a class statement. This is done regardless of the brace style being used.</p>
     <div class="code">
         <p class="code">
-            the bracket is always attached to a class statement:</p>
+            the brace is always attached to a class statement:</p>
         <pre>class FooClass <span class="brace">{</span>
 ...
 <span class="brace">}</span>;
@@ -953,11 +1040,11 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_attach_inlines">
         <code class="title">--attach-inlines / -xl</code><br />
-        Attach brackets to class and struct inline function definitions. This is not done for run-in type brackets 
-        (Horstmann and Pico styles). This option is effective for C++ files only.</p>
+        Attach braces to class and struct inline function definitions. This option has precedence for all
+        styles except Horstmann and Pico (run-in styles). It is effective for C++ files only.</p>
     <div class="code">
         <p class="code">
-            all brackets are always attached to class and struct inline function definitions:</p>
+            all braces are attached to class and struct inline method definitions:</p>
         <pre>class FooClass
 <span class="brace">{</span>
     void Foo() <span class="brace">{</span>
@@ -970,23 +1057,46 @@ indent-switches     <span class="comment"># cannot do this on the command line</
         &nbsp;</p>
     <p id="_attach-extern-c">
         <code class="title">--attach-extern-c / -xk</code><br />
-        Attach brackets to a bracketed extern "C" statement. This is done regardless of the bracket style being used.
+        Attach braces to a braced extern "C" statement. This is done regardless of the brace style being used.
         This option is effective for C++ files only.</p>
     <p>
-        An extern "C" statement that is part of a function definition is formatted according to the requested bracket
-        style. Bracketed extern "C" statements are unaffected by the bracket style and this option is the only way to
+        An extern "C" statement that is part of a function definition is formatted according to the requested brace
+        style. Braced extern "C" statements are unaffected by the brace style and this option is the only way to
         change them.</p>
     <div class="code">
         <p class="code">
-            this option attaches brackets to a bracketed extern "C" statement:</p>
+            this option attaches braces to a braced extern "C" statement:</p>
         <pre>#ifdef __cplusplus
 extern "C" <span class="brace">{</span>
 #endif
 </pre>
         <p class="code">
-            but function definitions are formatted according to the requested bracket style:</p>
+            but function definitions are formatted according to the requested brace style:</p>
         <pre>extern "C" EXPORT void STDCALL Foo()
 <span class="brace">{}</span>
+</pre>
+    </div>
+    <p>
+        &nbsp;</p>
+    <p id="_attach-closing-while">
+        <code class="title">--attach-closing-while / -xV</code><br />
+        Attach the closing 'while' of a 'do-while' statement to the closing brace. This has precedence over both
+        the brace style and the break closing braces option.</p>
+    <div class="code">
+        <pre>do
+<span class="brace">{</span>
+    bar();
+    ++x;
+<span class="brace">}</span>
+while x == 1;
+</pre>
+        <p class="code">
+            becomes:</p>
+        <pre>do
+<span class="brace">{</span>
+    bar();
+    ++x;
+<span class="brace">}</span> while x == 1;
 </pre>
     </div>
     <p>
@@ -1049,7 +1159,7 @@ public:
         &nbsp;</p>
     <p id="_indent-switches">
         <code class="title">--indent-switches / -S</code><br />
-        Indent 'switch' blocks so that the 'case X:' statements are indented in the switch block. The entire 
+        Indent 'switch' blocks so that the 'case X:' statements are indented in the switch block. The entire
         case block is indented.</p>
     <div class="code">
         <pre>switch (foo)
@@ -1121,7 +1231,7 @@ case 2:
         &nbsp;</p>
     <p id="_indent-namespaces">
         <code class="title">--indent-namespaces / -N</code><br />
-        Add extra indentation to namespace blocks. This option has no effect on Java files. It 
+        Add extra indentation to namespace blocks. This option has no effect on Java files. It
         will also indent CORBA IDL module statements.</p>
     <div class="code">
         <pre>namespace foospace
@@ -1149,12 +1259,45 @@ class Foo
     </div>
     <p>
         &nbsp;</p>
+    <p id="_indent-after-parens">
+        <code class="title">--indent-after-parens / -xU</code><br />
+        Indent, instead of align, continuation lines following lines that contain an opening paren '(' or an assignment
+        '='.  This includes function definitions and declarations and return statements. The indentation can be modified
+        by using the following indent-continuation option. This option may be preferred for editors displaying proportional
+        fonts.</p>
+    <div class="code">
+        <pre>void Foo(bool bar1,
+         bool bar2)
+<span class="brace">{</span>
+    isLongFunction(bar1,
+                   bar2);
+
+    isLongVariable = foo1
+                     || foo2;
+<span class="brace">}</span>
+</pre>
+        <p class="code">
+            becomes:</p>
+        <pre>void Foo(bool bar1,
+    bool bar2)
+<span class="brace">{</span>
+    isLongFunction(bar1,
+        bar2);
+
+    isLongVariable = foo1
+        || foo2;
+<span class="brace">}</span>
+</pre>
+    </div>
+    <p>
+        &nbsp;</p>
     <p id="_indent-continuation">
         <code class="title">--indent-continuation=<span class="option">#</span> / -xt<span class="option">#</span></code><br />
-        Set the continuation indent for a line that ends with an opening paren '<code>(</code>' or an assignment 
-        '<code>=</code>'. This includes function definitions and declarations. The value for <span class="option">#</span>
-        indicates a <strong>number of indents</strong>. The valid values are the integer
-        values from <strong>0 thru 4</strong>: The default value is <strong>1</strong>, one indent.</p>
+        Set the continuation indent for a line that ends with an opening paren '(' or an assignment '='. This includes
+        function definitions and declarations. It will also modify the previous indent-after-paren option. The value for
+        <span class="option">#</span> indicates a <strong>number of indents</strong>. The valid values are the integer
+        values from <strong>0 thru 4</strong>. If this option is not used, the default value of <strong>1</strong> is
+        used. </p>
     <div class="code">
         <pre>isLongVariable =
     foo1 ||
@@ -1198,7 +1341,7 @@ error:
     while (isFoo) <span class="brace">{</span>
         if (isFoo)
             goto error;
-        ... 
+        ...
     error:
         ...
         <span class="brace">}</span>
@@ -1210,9 +1353,9 @@ error:
 
     <p id="_indent-preproc-block">
         <code class="title">--indent-preproc-block / -xW</code><br />
-        Indent preprocessor blocks at bracket level zero and immediately within a namespace. There are restrictions on
-        what will be indented. Blocks within methods, classes, arrays, etc., will not be indented. Blocks containing brackets
-        or multi-line define statements will not be indented. Without this option the preprocessor block is not 
+        Indent preprocessor blocks at brace level zero and immediately within a namespace. There are restrictions on
+        what will be indented. Blocks within methods, classes, arrays, etc., will not be indented. Blocks containing braces
+        or multi-line define statements will not be indented. Without this option the preprocessor block is not
         indented.</p>
     <div class="code">
         <pre>#ifdef _WIN32
@@ -1313,12 +1456,12 @@ error:
         3 - indent at least one-half an additional indent. This is intended for large indents (e.g. 8).<br />
         The default value is <strong>2</strong>, two additional indents.</p>
     <div class="code">
-        <pre><span class="comment">// default setting makes this non-bracketed code clear</span>
+        <pre><span class="comment">// default setting makes this non-braced code clear</span>
 if (a &lt; b
         || c &gt; d)
     foo++;
 
-<span class="comment">// but creates an exaggerated indent in this bracketed code</span>
+<span class="comment">// but creates an exaggerated indent in this braced code</span>
 if (a &lt; b
         || c &gt; d)
 <span class="brace">{</span>
@@ -1326,14 +1469,14 @@ if (a &lt; b
 <span class="brace">}</span>
 </pre>
         <p class="code">
-            becomes (when setting 
+            becomes (when setting
             <strong><code>--min-conditional-indent=<span class="option">0</span></code></strong>):</p>
-        <pre><span class="comment">// setting makes this non-bracketed code less clear</span>
+        <pre><span class="comment">// setting makes this non-braced code less clear</span>
 if (a &lt; b
     || c &gt; d)
     foo++;
 
-<span class="comment">// but makes this bracketed code clearer</span>
+<span class="comment">// but makes this braced code clearer</span>
 if (a &lt; b
     || c &gt; d)
 <span class="brace">{</span>
@@ -1343,10 +1486,10 @@ if (a &lt; b
     </div>
     <p>
         &nbsp;</p>
-    <p id="_max-instatement-indent">
-        <code class="title">--max-instatement-indent=<span class="option">#</span> / -M<span class="option">#</span></code><br />
-        Set the &nbsp;maximum of <span class="option">#</span> spaces to indent a continuation line. The 
-        <span class="option">#</span> indicates a number of columns and must not be less than <strong>40</strong> nor
+    <p id="_max-continuation-indent">
+        <code class="title">--max-continuation-indent=<span class="option">#</span> / -M<span class="option">#</span></code><br />
+        Set the &nbsp;maximum of <span class="option">#</span> spaces to indent a continuation line. The
+        <span class="option">#</span> indicates a number of columns and must not be less than <strong>40</strong> or
         greater than <strong>120</strong>. If no value is set, the default value of <strong>40</strong> will be
         used. This option will prevent continuation lines from extending too far to the right. Setting a larger value
         will allow the code to be extended further to the right.</p>
@@ -1452,16 +1595,16 @@ isBar = false;
         &nbsp;</p>
     <p id="_pad-comma">
         <code class="title">--pad-comma / -xg </code><br />
-        Insert space padding after commas. This is not needed if pad-oper is used. Any end of line comments will 
-        remain in the original column, if possible. Note that there is no option to unpad. Once padded, they 
+        Insert space padding after commas. This is not needed if pad-oper is used. Any end of line comments will
+        remain in the original column, if possible. Note that there is no option to unpad. Once padded, they
         stay padded.</p>
     <div class="code">
-        <pre>if (isFoo(a,b)
+        <pre>if (isFoo(a,b))
     bar(a,b);
 </pre>
         <p class="code">
             becomes:</p>
-        <pre>if (isFoo(a, b)
+        <pre>if (isFoo(a, b))
     bar(a, b);
 </pre>
     </div>
@@ -1509,7 +1652,7 @@ isBar = false;
         only. Parens that are empty will not be padded. Any end of line comments will remain in the original column,
         if possible. This can be used with unpad-paren below to remove unwanted spaces. If used with pad&#8209;paren or
         pad&#8209;paren&#8209;out, this option will be ignored. If used with pad&#8209;paren&#8209;in, the result will
-        be the same as pad&#8209;paren.</p>
+        be the pad&#8209;paren.</p>
     <div class="code">
         <pre>if (isFoo((a+2), b))
     bar(a, b);
@@ -1560,14 +1703,14 @@ isBar = false;
         <code class="title">--unpad-paren / -U </code>
         <br />
         Remove extra space padding around parens on the inside and outside. Any end of line comments will remain
-        in the original column, if possible. This option can be used in combination with the paren padding options 
-        pad&#8209;paren, pad&#8209;paren&#8209;out, pad&#8209;paren&#8209;in, 
-        and pad&#8209;header above. Only padding that has not been requested by other options will be 
+        in the original column, if possible. This option can be used in combination with the paren padding options
+        pad&#8209;paren, pad&#8209;paren&#8209;out, pad&#8209;paren&#8209;in,
+        and pad&#8209;header above. Only padding that has not been requested by other options will be
         removed.</p>
     <p>
         For example, if a source has parens padded on both the inside and outside, and you want inside only. You need
-        to use unpad-paren to remove the outside padding, and pad&#8209;paren&#8209;in to 
-        retain the inside padding. Using only pad&#8209;paren&#8209;in> would not remove the outside 
+        to use unpad-paren to remove the outside padding, and pad&#8209;paren&#8209;in to
+        retain the inside padding. Using only pad&#8209;paren&#8209;in> would not remove the outside
         padding.</p>
     <div class="code">
         <pre>if ( isFoo( ( a+2 ), b ) )
@@ -1624,32 +1767,32 @@ isBar = false;
     <div class="code">
         <pre>char* foo1;
 char &amp; foo2;
-String ^s1;</pre>
+string ^s1;</pre>
         <p class="code">
             becomes (with align-pointer=type):</p>
         <pre>char* foo1;
 char&amp; foo2;
-String^ s1;</pre>
+string^ s1;</pre>
     </div>
     <div class="code">
         <pre>char* foo1;
 char &amp; foo2;
-String ^s1;</pre>
+string ^s1;</pre>
         <p class="code">
             becomes (with align-pointer=middle):</p>
         <pre>char * foo1;
 char &amp; foo2;
-String ^ s1;</pre>
+string ^ s1;</pre>
     </div>
     <div class="code">
         <pre>char* foo1;
 char &amp; foo2;
-String ^s1;</pre>
+string ^s1;</pre>
         <p class="code">
             becomes (with align-pointer=name):</p>
         <pre>char *foo1;
 char &amp;foo2;
-String ^s1;</pre>
+string ^s1;</pre>
     </div>
     <p>
         &nbsp;</p>
@@ -1689,11 +1832,10 @@ String ^s1;</pre>
 
     <h3 id="_Formatting_Options">Formatting Options</h3>
 
-    <p id="_break-closing-brackets">
-        <code class="title">--break-closing-brackets / -y </code>
-        <br />
+    <p id="_break-closing-braces">
+        <code class="title">--break-closing-braces / -y</code><br />
         When used with --style=java, --style=kr, --style=stroustrup, --style=linux, or --style=1tbs, this breaks closing
-        headers (e.g. 'else', 'catch', ...) from their immediately preceding closing brackets. Closing header brackets
+        headers (e.g. 'else', 'catch', ...) from their immediately preceding closing braces. Closing header braces
         are always broken with the other styles.</p>
     <div class="code">
         <pre>void Foo(bool isFoo) <span class="brace">{</span>
@@ -1753,13 +1895,10 @@ else
     <p>
         &nbsp;</p>
     <p id="_break-one-line-headers">
-        <code class="title">--break-one-line-headers / -xb </code>
-        <br />
-    </p>
-    <p>
+        <code class="title">--break-one-line-headers / -xb </code><br />
         Break one line headers (e.g. &#39;if&#39;, &#39;while&#39;,&nbsp;&#39;else&#39;,&nbsp;...) from a statement residing
-        on the same line. If the statement is enclosed in brackets, the brackets will be formatted according to the requested
-        bracket style. </p>
+        on the same line. If the statement is enclosed in braces, the braces will be formatted according to the requested
+        brace style. </p>
     <p>
         A multi-statement line will NOT be broken if keep-one-line-statements is requested. One line blocks
         will NOT be broken if keep-one-line-blocks is requested and the header is enclosed in the block. </p>
@@ -1786,16 +1925,15 @@ else
     </div>
     <p>
         &nbsp;</p>
-    <p id="_add-brackets">
-        <code class="title">--add-brackets / -j </code>
-        <br />
-        Add brackets to unbracketed one line conditional statements (e.g. 'if', 'for', 'while'...). The statement must
-        be on a single line. The brackets will be added according to the requested bracket style. If no style is requested
-        the brackets will be attached. </p>
+    <p id="_add-braces">
+        <code class="title">--add-braces / -j </code><br />
+        Add braces to unbraced one line conditional statements (e.g. 'if', 'for', 'while'...). The statement must
+        be on a single line. The braces will be added according to the requested brace style. If no style is requested
+        the braces will be attached. </p>
     <p>
-        Brackets will NOT be added to a multi-statement line if keep-one-line-statements is requested. Brackets will 
-        NOT be added to a one line block if keep-one-line-blocks is requested. If --add-one-line-brackets is also
-        used, the result will be one line brackets.</p>
+        Braces will NOT be added to a multi-statement line if keep-one-line-statements is requested. Braces will
+        NOT be added to a one line block if keep-one-line-blocks is requested. If used with --add-one-line-braces,
+        the result will be one line braces.</p>
     <div class="code">
         <pre>if (isFoo)
     isFoo = false;
@@ -1809,10 +1947,9 @@ else
     </div>
     <p>
         &nbsp;</p>
-    <p id="_add-one-line-brackets">
-        <code class="title">--add-one-line-brackets / -J </code>
-        <br />
-        Add one line brackets to unbracketed one line conditional statements (e.g. 'if', 'for',
+    <p id="_add-one-line-braces">
+        <code class="title">--add-one-line-braces / -J </code><br />
+        Add one line braces to unbraced one line conditional statements (e.g. 'if', 'for',
         'while'...). The statement must be on a single line. The option implies --keep-one-line-blocks and
         will not break the one line blocks.</p>
     <div class="code">
@@ -1827,11 +1964,11 @@ else
     </div>
     <p>
         &nbsp;</p>
-    <p id="_remove-brackets">
-        <code class="title">--remove-brackets / -xj</code><br />
-        Remove brackets from conditional statements (e.g. 'if', 'for', 'while'...).
-        The statement must be a single statement on a single line. If --add-brackets or --add-one-line-brackets is also
-        used the result will be to add brackets. Brackets will not be removed from "One True Brace Style", 
+    <p id="_remove-braces">
+        <code class="title">--remove-braces / -xj</code><br />
+        Remove braces from conditional statements (e.g. 'if', 'for', 'while'...).
+        The statement must be a single statement on a single line. If --add-braces or --add-one-line-braces is also
+        used the result will be to add braces. Braces will not be removed from "One True Brace Style",
         --style=1tbs.</p>
     <div class="code">
         <pre>if (isFoo)
@@ -1846,6 +1983,39 @@ else
     </div>
     <p>
         &nbsp;</p>
+    <p id="_break-return-type">
+        <code class="title">--break-return-type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / -xB</code><br />
+        <code class="title">--break-return-type-decl / -xD</code><br />
+        Break the return type from the function name. The two options are for the function definitions (-xB), and the
+        function declarations or signatures (-xD). If used with --attach-return-type, the result will be to break the
+        return type. This option has no effect on Objective-C functions.</p>
+    <div class="code">
+        <pre>void Foo(bool isFoo);</pre>
+        <p class="code">
+            becomes:</p>
+        <pre>void
+Foo(bool isFoo);</pre>
+    </div>
+    <p>
+        &nbsp;</p>
+    <p id="_attach-return-type">
+        <code class="title">--attach-return-type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / -xf</code><br />
+        <code class="title">--attach-return-type-decl / -xh</code><br />
+        Attach the return type to the function name. The two options are for the function definitions (-xf), and the 
+        function declarations or signatures (-xh). They are intended to undo the --break-return-type options. If used
+        with --break-return-type, the result will be to break the return type. This option has no effect on 
+        Objective-C functions.</p>
+    <div class="code">
+        <pre>void
+Foo(bool isFoo);</pre>
+        <p class="code">
+            becomes:</p>
+        <pre>void Foo(bool isFoo);</pre>
+    </div>
+    <p>
+        &nbsp;</p>
+
+
     <p id="_keep-one-line-blocks">
         <code class="title">--keep-one-line-blocks / -O </code>
         <br />
@@ -1868,10 +2038,6 @@ else
 <span class="brace">{</span>
     isFoo = false; cout &lt;&lt; isFoo &lt;&lt; endl;
 <span class="brace">}</span>
-</pre>
-        <p class="code">
-            remains unchanged.</p>
-        <pre>if (isFoo) DoBar();
 </pre>
         <p class="code">
             remains unchanged.</p>
@@ -1924,18 +2090,18 @@ else
             <br />
             --break-after-logical / -xL</code><br />
         The option max&#8209;code&#8209;length will break a line if the code exceeds <span class="option">#</span>
-        characters. The valid values are 50 thru 200. Lines without logical conditionals will break on a logical conditional
-        (||, &amp;&amp;, ...), comma, paren, semicolon, or space.</p>
+        characters. The valid values are <strong>50</strong> thru <strong>200</strong>. Lines without logical conditionals
+        will break on a logical conditional (||, &amp;&amp;, ...), comma, paren, semicolon, or space.</p>
     <p>
         Some code will not be broken, such as comments, quotes, and arrays. If used with keep&#8209;one&#8209;line&#8209;blocks
-        or add-one-line-brackets the blocks will NOT be broken. If used with keep&#8209;one&#8209;line&#8209;statements
+        or add-one-line-braces the blocks will NOT be broken. If used with keep&#8209;one&#8209;line&#8209;statements
         the statements will be broken at a semicolon if the line goes over the maximum length. If there is no available
         break point within the max code length, the line will be broken at the first available break point after the max
         code length.</p>
     <p>
-        By default logical conditionals will be placed first in the new line. The option break&#8209;after&#8209;logical
-        will cause the logical conditionals to be placed last on the previous line. This option has no effect without
-        max&#8209;code&#8209;length.</p>
+        By default logical conditionals will be placed first in the new line. The option
+        <strong>break&#8209;after&#8209;logical</strong> will cause the logical conditionals to be placed last on the
+        previous line. This option has no effect without max&#8209;code&#8209;length.</p>
     <div class="code">
         <pre>if (thisVariable1 == thatVariable1 || thisVariable2 == thatVariable2 || thisVariable3 == thatVariable3)
     bar();</pre>
@@ -1971,15 +2137,15 @@ else
     <h3 id="_Objective_C_Options">Objective&#8209;C Options</h3>
 
     <p>
-        These options are effective for Objective&#8209;C files only. The paren padding options will still apply to the
-        Objective-C method prefix and return type unless overridden by the following options.</p>
+        These options are effective for Objective&#8209;C files only. The standard paren padding options will still apply
+        to the Objective-C method prefix and return type unless overridden by the following options.</p>
     <p>
-        Because of the longer indents sometimes needed for Objective&#8209;C, the option "max-instatement-indent" may
-        need to be increased. If you are not getting the paren and block paren alignment you want try increasing this
-        value. The option is described in the "Indentation Options" section.</p>
+        Because of the longer indents sometimes needed for Objective&#8209;C, the option "max-continuation-indent" may
+        need to be increased. If you are not getting the paren and square bracket alignment you want, try increasing
+        this value. The option is described in the "Indentation Options" section.</p>
     <p id="_pad-method-prefix">
         <code class="title">--pad-method-prefix / -xQ</code><br />
-        Insert space padding <strong>after</strong> the '-' or '+' Objective&#8209;C method prefix. This will add 
+        Insert space padding <strong>after</strong> the '-' or '+' Objective&#8209;C method prefix. This will add
         exactly one space. Any additional spaces will be deleted.</p>
     <div class="code">
         <pre>-(void)foo1;
@@ -2023,7 +2189,7 @@ else
     <p id="_unpad-return-type">
         <code class="title">--unpad-return-type / -xr</code><br />
         Remove all space padding <strong>after</strong> the Objective&#8209;C return type. This option
-        will be ignored if used with pad&#8209;return&#8209;type. This option  takes precedence over the pad paren 
+        will be ignored if used with pad&#8209;return&#8209;type. This option  takes precedence over the pad paren
         outside option. </p>
     <div class="code">
         <pre>-(void) foo1;
@@ -2037,9 +2203,9 @@ else
         &nbsp;</p>
     <p id="_pad-param-type">
         <code class="title">--pad-param-type / -xS</code><br />
-        Insert space padding around the Objective&#8209;C parameter type. This will add exactly one space. Any additional
-        spaces will be deleted. This has precedence over the pad method colon option and will always cause space padding
-        after the method colon.</p>
+        Insert space padding around an Objective&#8209;C parameter type. This will add exactly
+        one space. Any additional spaces will be deleted. This has precedence over the pad method colon option and
+        will always cause space padding after a method colon.</p>
     <div class="code">
         <pre>-(void)foo1:(bool)barArg1;
 -(void)foo2:    (bool)   barArg2;</pre>
@@ -2052,9 +2218,9 @@ else
         &nbsp;</p>
     <p id="_unpad-param-type">
         <code class="title">--unpad-param-type / -xs</code><br />
-        Remove all space padding around the Objective&#8209;C parameter type. This option  takes precedence over the pad
-        paren outside option. The pad method colon option has precedence over the <strong>opening</strong> paren. The
-        closing paren will always be unpadded.</p>
+        Remove all space padding around an Objective&#8209;C parameter type. This option  takes precedence over the
+        pad paren outside option. The pad method colon option has precedence over the <strong>opening</strong> paren.
+        The closing paren will always be unpadded.</p>
     <div class="code">
         <pre>-(void)foo1: (bool)    barArg1;
 -(void)foo2:     (bool)    barArg2;</pre>
@@ -2063,7 +2229,7 @@ else
         <pre>-(void)foo1:(bool)barArg1;
 -(void)foo2:(bool)barArg2;</pre>
         <p class="code">
-            becomes (with a padded method colon 
+            becomes (with a padded method colon
             after):</p>
         <pre>-(void)foo1: (bool)barArg1;
 -(void)foo2: (bool)barArg2;</pre>
@@ -2072,7 +2238,7 @@ else
         &nbsp;</p>
     <p id="_align-method-colon">
         <code class="title">--align-method-colon / -xM</code><br />
-        Align the colons in Objective&#8209;C method declarations 
+        Align the colons in Objective&#8209;C method declarations
         and method calls. If this option is not declared, method definitions will be indented uniformly, and method calls
         will align with the first keyword.</p>
     <div class="code">
@@ -2095,7 +2261,7 @@ else
            error: arg3];
 <span class="brace">}</span></pre>
         <p class="code">
-            becomes (with 
+            becomes (with
             align-method-colon):</p>
         <pre>-(void)longKeyword: (ID)theArg1
            keyword: (int)theArg2
@@ -2140,7 +2306,7 @@ else
     <h3 id="_Other_Options">Other Options</h3>
 
     <p>
-        These are non-formatting options available for the command-line. They can also be included in an options
+        These are non-formatting options available for the command-line. They can also be included in an option
         file.</p>
 
     <p id="_suffix">
@@ -2166,11 +2332,11 @@ else
     <p>
         Excludes are matched from the end of the file path. An exclude option of "templates" will exclude ALL directories
         named "templates". An exclude option of "cpp/templates" will exclude ALL "cpp/templates" directories. You may
-        proceed backwards in the directory tree to exclude only the required directories.</p>
+        proceed backward in the directory tree to exclude only the required directories.</p>
     <p>
-        Specific files may be excluded in the same manner. An exclude option of "default.cpp" will exclude ALL files 
-        named "default.cpp". An exclude option of "python/default.cpp" will exclude ALL files named "default.cpp" 
-        contained in a "python" subdirectory. You may proceed backwards in the directory tree to exclude only the 
+        Specific files may be excluded in the same manner. An exclude option of "default.cpp" will exclude ALL files
+        named "default.cpp". An exclude option of "python/default.cpp" will exclude ALL files named "default.cpp"
+        contained in a "python" subdirectory. You may proceed backward in the directory tree to exclude only the
         required files.</p>
     <p>
         Wildcards are NOT allowed. There may be more than one exclude statement. The file path and name may be placed
@@ -2195,11 +2361,12 @@ else
     <p id="_preserve-date">
         <code class="title">--preserve-date / -Z</code><br />
         Preserve the original file's date and time modified. The time modified will be changed a few microseconds to
-        force the changed files to compile. This option is not effective if redirection is used to rename the input 
+        force the changed files to compile. This option is not effective if redirection is used to rename the input
         file.</p>
     <p id="_verbose">
         <code class="title">--verbose / -v</code><br />
-        Verbose display mode. Display optional information, such as release number, date, and statistical data.</p>
+        Verbose display mode. Display optional information, such as release number, date, 
+        option file locations, and statistical data.</p>
     <p id="_formatted">
         <code class="title">--formatted / -Q</code><br />
         Formatted files display mode. Display only the files that have been formatted. Do not display files that
@@ -2213,8 +2380,8 @@ else
             --lineend=macold&nbsp;&nbsp;/ -z3
         </code><br />
         Force use of the specified line end style. Valid options are windows (CRLF), linux (LF), and macold (CR). MacOld
-        style is the format for Mac&nbsp;OS&nbsp;9 and earlier. OS&nbsp;X uses the Linux style. If one of these options
-        is not used, the line ends will be determined automatically from the input file.</p>
+        style is the format for Mac&nbsp;OS&nbsp;9 and earlier. MacOS and OS&nbsp;X uses the Linux style. If one of
+        these options is not used, the line ends will be determined automatically from the input file.</p>
     <p>
         When <strong>redirection</strong> is used on Windows the output will always have Windows line ends. This option
         will be ignored.</p>
@@ -2227,29 +2394,48 @@ else
     <h3 id="_Command_Line_Only">Command Line Only</h3>
 
     <p>These options are available for the command-line only. They are NOT available in an options file.</p>
-    <p id="_options=">
+
+    <p id="_options">
         <code class="title">--options=<span class="option">####</span></code><br />
-        Specify an options file #### to read and use. It must contain a file path for the file. This will allow the file
-        name to be changed from astylerc or .astylerc.</p>
-    <p id="_options=none">
         <code class="title">--options=none</code><br />
-        Disable the default options file. Only the command-line parameters will be used.</p>
+        Specify an options file #### to read and use. It must contain a file path and a file name. This will allow
+        the file name to be changed from astylerc or .astylerc.</p>
+    <p>
+        The "none" option will disable the default options file if one exists. Only command-line parameters will be used.
+    </p>
+    <p>
+        Further information is available in the <a href="#_Option_Files">Option&nbsp;Files</a> section.</p>
+    <p id="_project">
+        <code class="title">--project</code><br />
+        <code class="title">--project=<span class="option">####</span></code><br />
+        <code class="title">--project=none</code> <br />
+        Specify a project option file to use. The option file 
+        should have&nbsp; the default name of .astylerc or _astylerc and should be in the top directory of the project
+        being formatted. </p>
+    <p>
+        Specify a  project options file #### to use. It must contain a file name only without a directory path.
+        This will allow the project file name to be changed from .astylerc or _astylerc. It should be in the top directory
+        of the project being formatted. </p>
+    <p>
+        The "none" option will disable a project options file if one exists. In this case, the project option file will
+        not be used.</p>
+    <p>
+        Further information is available in the <a href="#_Option_Files">Option&nbsp;Files</a> section.</p>
     <p id="_ascii">
         <code class="title">--ascii / -I</code><br />
         The displayed output will be ASCII characters only. The text will be displayed in English and numbers will not
         be formatted. The short option must be by itself, it cannot be concatenated with other options.</p>
     <p id="_version">
         <code class="title">--version / -V</code><br />
-        Print version number and quit. The short option must be by itself, it cannot be concatenated with other 
+        Print version number and quit. The short option must be by itself, it cannot be concatenated with other
         options.</p>
     <p id="_help">
         <code class="title">--help / -h / -?</code><br />
-        Print a help message and quit. The short option must be by itself, it cannot be concatenated with other 
+        Print a help message and quit. The short option must be by itself, it cannot be concatenated with other
         options.</p>
     <p id="_html">
         <code class="title">--html / -!</code><br />
-        Open the HTML help
-        file "astyle.html" in the default browser and quit. The short option must be by itself, it
+        Open the HTML help file "astyle.html" in the default browser and quit. The short option must be by itself, it
         cannot be concatenated with other options. The documentation must be installed in the standard install path (/usr/share/doc/astyle/html
         for Linux or %PROGRAMFILES%\AStyle\doc for Windows). If installed to a different path use html=###.</p>
     <p id="_html=">
@@ -2257,7 +2443,7 @@ else
         Open an HTML help file in the default browser using the file path #### and quit. An HTML file other than "astyle.help"
         may be specified. The path may include a directory path and a file name, or a file name only (e.g. html=install.html).
         If only a file name is used, it is assumed to be in the standard install path (/usr/share/doc/astyle/html
-        for Linux or %PROGRAMFILES%\AStyle\doc for Windows). In both cases the file name must include the html extension.
+        for Linux or %PROGRAMFILES%\AStyle\doc for Windows). In both cases, the file name must include the html extension.
         File paths containing spaces must be enclosed in quotes.</p>
     <p>
         On Linux the HTML file is opened using the script "xdg-open" from the install package "xdg-utils". This should
@@ -2265,6 +2451,14 @@ else
     <p>
         Any HTML file can be opened by this option. The files you are likely to need are astyle.html (the default), install.html,
         and index.html.</p>
+    <p id="_stdin=">
+        <code class="title">--stdin=<span class="option">####</span></code><br />
+        Open a file using the file path #### as input to single file formatting. This is a replacement for redirection.
+        Do not use this with "&lt;" redirection.</p>
+    <p id="_stdout=">
+        <code class="title">--stdout=<span class="option">####</span></code><br />
+        Open a file using the file path #### as output from single file formatting. This is a replacement for redirection.
+        Do not use this with "&gt;" redirection.</p>
     <p>
         &nbsp;</p>
     <hr style="margin-left: -0.4in;" />
